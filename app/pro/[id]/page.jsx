@@ -165,27 +165,57 @@ export default function ProProfile() {
 
             {/* Reviews Section */}
             <div className="bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-[30px] p-8">
-              <h2 className="text-2xl font-black text-black dark:text-white mb-6">Reviews</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-black text-black dark:text-white">Reviews</h2>
+                <span className="text-sm font-bold text-gray-600 dark:text-gray-400">
+                  {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+                </span>
+              </div>
               {reviews.length === 0 ? (
-                <p className="text-gray-600 dark:text-gray-400">No reviews yet</p>
+                <div className="text-center py-8">
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">No reviews yet</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500">Be the first to review this pro!</p>
+                </div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {reviews.map((review) => (
-                    <div key={review._id} className="border-b-2 border-gray-200 dark:border-gray-800 pb-4 last:border-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-black dark:text-white">{review.userId?.name || 'Anonymous'}</span>
-                          {review.verified && <MdVerified className="text-sm text-black dark:text-white" />}
+                    <div key={review._id || review.id} className="border-b-2 border-gray-200 dark:border-gray-800 pb-6 last:border-0 last:pb-0">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                            <span className="text-sm font-black text-black dark:text-white">
+                              {review.userId?.name?.charAt(0)?.toUpperCase() || 'A'}
+                            </span>
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-black dark:text-white">{review.userId?.name || 'Anonymous'}</span>
+                              {review.verified && <MdVerified className="text-sm text-black dark:text-white" title="Verified purchase" />}
+                            </div>
+                            {review.service && (
+                              <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">Service: {review.service}</p>
+                            )}
+                          </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          {[...Array(review.rating)].map((_, i) => (
-                            <MdStar key={i} className="text-yellow-400 text-sm" />
+                          {[...Array(Math.floor(review.rating || 0))].map((_, i) => (
+                            <MdStar key={i} className="text-yellow-400 text-lg fill-current" />
                           ))}
+                          {review.rating % 1 !== 0 && (
+                            <MdStar className="text-yellow-400 text-lg fill-current opacity-50" />
+                          )}
+                          <span className="text-sm font-bold text-gray-600 dark:text-gray-400 ml-2">
+                            {review.rating?.toFixed(1)}
+                          </span>
                         </div>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">{review.comment}</p>
-                      <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
-                        {new Date(review.createdAt).toLocaleDateString()}
+                      <p className="text-sm text-gray-700 dark:text-gray-300 mb-2 leading-relaxed">{review.comment}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-500">
+                        {new Date(review.createdAt).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
                       </p>
                     </div>
                   ))}

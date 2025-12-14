@@ -214,30 +214,26 @@ export default function Dashboard() {
                     <div className="flex gap-3 flex-wrap">
                       <button
                         onClick={async () => {
-                          if (confirm('Accept this contract?')) {
-                            try {
-                              const token = localStorage.getItem('token');
-                              const contractId = contract._id || contract.id;
-                              const response = await fetch(`/api/contracts/${contractId}`, {
-                                method: 'PATCH',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                  'Authorization': `Bearer ${token}`,
-                                },
-                                body: JSON.stringify({ status: 'accepted' }),
-                              });
-                              
-                              const data = await response.json();
-                              if (data.success) {
-                                alert('Contract accepted successfully!');
-                                fetchContracts();
-                              } else {
-                                alert('Error: ' + (data.error || 'Failed to accept contract'));
-                              }
-                            } catch (error) {
-                              console.error('Error accepting contract:', error);
-                              alert('Failed to accept contract. Please try again.');
+                          try {
+                            const token = localStorage.getItem('token');
+                            const contractId = contract._id || contract.id;
+                            const response = await fetch(`/api/contracts/${contractId}`, {
+                              method: 'PATCH',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`,
+                              },
+                              body: JSON.stringify({ status: 'accepted' }),
+                            });
+                            
+                            const data = await response.json();
+                            if (data.success) {
+                              fetchContracts();
+                            } else {
+                              console.error('Error accepting contract:', data.error);
                             }
+                          } catch (error) {
+                            console.error('Error accepting contract:', error);
                           }
                         }}
                         className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black font-bold rounded-[20px] hover:opacity-90 transition-opacity"
@@ -246,30 +242,26 @@ export default function Dashboard() {
                       </button>
                       <button
                         onClick={async () => {
-                          if (confirm('Reject this contract?')) {
-                            try {
-                              const token = localStorage.getItem('token');
-                              const contractId = contract._id || contract.id;
-                              const response = await fetch(`/api/contracts/${contractId}`, {
-                                method: 'PATCH',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                  'Authorization': `Bearer ${token}`,
-                                },
-                                body: JSON.stringify({ status: 'rejected' }),
-                              });
-                              
-                              const data = await response.json();
-                              if (data.success) {
-                                alert('Contract rejected.');
-                                fetchContracts();
-                              } else {
-                                alert('Error: ' + (data.error || 'Failed to reject contract'));
-                              }
-                            } catch (error) {
-                              console.error('Error rejecting contract:', error);
-                              alert('Failed to reject contract. Please try again.');
+                          try {
+                            const token = localStorage.getItem('token');
+                            const contractId = contract._id || contract.id;
+                            const response = await fetch(`/api/contracts/${contractId}`, {
+                              method: 'PATCH',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`,
+                              },
+                              body: JSON.stringify({ status: 'rejected' }),
+                            });
+                            
+                            const data = await response.json();
+                            if (data.success) {
+                              fetchContracts();
+                            } else {
+                              console.error('Error rejecting contract:', data.error);
                             }
+                          } catch (error) {
+                            console.error('Error rejecting contract:', error);
                           }
                         }}
                         className="px-6 py-2 border-2 border-gray-300 dark:border-gray-700 text-black dark:text-white font-bold rounded-[20px] hover:border-black dark:hover:border-white transition-all"
@@ -282,44 +274,36 @@ export default function Dashboard() {
                     <div className="flex gap-3">
                       <button
                         onClick={async () => {
-                          if (confirm('Mark this contract as completed?')) {
-                            try {
-                              const token = localStorage.getItem('token');
-                              const contractId = contract._id || contract.id;
-                              
-                              if (!contractId) {
-                                alert('Error: Contract ID is missing');
-                                return;
-                              }
-                              
-                              console.log('Marking contract as completed:', contractId);
-                              
-                              const response = await fetch(`/api/contracts/${contractId}`, {
-                                method: 'PATCH',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                  'Authorization': `Bearer ${token}`,
-                                },
-                                body: JSON.stringify({ 
-                                  status: 'completed',
-                                  completedDate: new Date().toISOString()
-                                }),
-                              });
-                              
-                              const data = await response.json();
-                              console.log('Response:', data);
-                              
-                              if (data.success) {
-                                alert('Contract marked as completed! The customer can now leave a review.');
-                                fetchContracts();
-                              } else {
-                                alert('Error: ' + (data.error || 'Failed to mark contract as completed'));
-                                console.error('API Error:', data);
-                              }
-                            } catch (error) {
-                              console.error('Error marking contract as completed:', error);
-                              alert('Failed to mark contract as completed. Please try again.');
+                          try {
+                            const token = localStorage.getItem('token');
+                            const contractId = contract._id || contract.id;
+                            
+                            if (!contractId) {
+                              console.error('Error: Contract ID is missing');
+                              return;
                             }
+                            
+                            const response = await fetch(`/api/contracts/${contractId}`, {
+                              method: 'PATCH',
+                              headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`,
+                              },
+                              body: JSON.stringify({ 
+                                status: 'completed',
+                                completedDate: new Date().toISOString()
+                              }),
+                            });
+                            
+                            const data = await response.json();
+                            
+                            if (data.success) {
+                              fetchContracts();
+                            } else {
+                              console.error('Error marking contract as completed:', data.error);
+                            }
+                          } catch (error) {
+                            console.error('Error marking contract as completed:', error);
                           }
                         }}
                         className="px-6 py-2 bg-green-600 dark:bg-green-500 text-white font-bold rounded-[20px] hover:opacity-90 transition-opacity"
@@ -332,12 +316,6 @@ export default function Dashboard() {
                     <div className="flex gap-3">
                       <button
                         onClick={() => {
-                          // Check if review already exists for this contract
-                          const hasReview = contract.reviewId || false;
-                          if (hasReview) {
-                            alert('You have already reviewed this contract.');
-                            return;
-                          }
                           setSelectedContractForReview(contract);
                           setShowReviewModal(true);
                         }}
@@ -397,14 +375,13 @@ export default function Dashboard() {
 
                     const data = await response.json();
                     if (data.success) {
-                      alert('Review submitted successfully!');
                       setShowReviewModal(false);
                       setSelectedContractForReview(null);
                       setReviewForm({ rating: 5, comment: '' });
                       // Refresh contracts to show updated state
                       fetchContracts();
                     } else {
-                      alert('Error: ' + (data.error || 'Failed to submit review'));
+                      console.error('Error submitting review:', data.error);
                     }
                   } catch (error) {
                     console.error('Error submitting review:', error);

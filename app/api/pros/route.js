@@ -14,14 +14,17 @@ export async function GET(request) {
     // Build query
     const query = {};
 
+    // Always filter by location if provided
     if (location) {
       query['location.city'] = new RegExp(location, 'i');
     }
 
+    // Filter by service if provided
     if (service) {
       query.services = { $in: [new RegExp(service, 'i')] };
     }
 
+    // Search query (name or services)
     if (search) {
       query.$or = [
         { name: new RegExp(search, 'i') },

@@ -79,8 +79,8 @@ function generatePros() {
         }
       }
 
-      const rating = parseFloat((Math.random() * 1.5 + 3.5).toFixed(1)); // 3.5 to 5.0
-      const reviews = Math.floor(Math.random() * 400) + 50; // 50 to 450
+      const rating = 0; // Start with 0, will be updated when real reviews are added
+      const reviews = 0; // Start with 0, will be updated when real reviews are added
       const yearsInBusiness = Math.floor(Math.random() * 15) + 2; // 2 to 17
       const employees = Math.floor(Math.random() * 8) + 1; // 1 to 9
       const responseTime = `${Math.floor(Math.random() * 10) + 2} min`; // 2 to 12 min

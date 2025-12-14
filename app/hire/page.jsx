@@ -122,13 +122,18 @@ export default function Hire() {
           sortBy: sortBy,
         });
 
-        // Only filter by location if a service is selected
-        if (selectedService) {
+        // Always filter by location (city)
+        if (selectedArea) {
           params.append('location', selectedArea);
+        }
+
+        // Filter by service if selected
+        if (selectedService) {
           params.append('service', selectedService);
         }
 
-        if (searchQuery && !selectedService) {
+        // Search query
+        if (searchQuery) {
           params.append('search', searchQuery);
         }
 

@@ -95,9 +95,22 @@ export async function GET(request) {
       .sort({ createdAt: -1 })
       .limit(50);
 
+    // Convert to plain objects with string IDs
+    const reviewsData = reviews.map(review => {
+      const reviewObj = review.toObject();
+      if (reviewObj._id) {
+        reviewObj._id = reviewObj._id.toString();
+        reviewObj.id = reviewObj._id;
+      }
+      if (reviewObj.userId && reviewObj.userId._id) {
+        reviewObj.userId._id = reviewObj.userId._id.toString();
+      }
+      return reviewObj;
+    });
+
     return Response.json({
       success: true,
-      data: reviews,
+      data: reviewsData,
     });
   } catch (error) {
     console.error('Error fetching reviews:', error);
