@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Image from "next/image";
@@ -17,6 +18,8 @@ import {
 } from "react-icons/md";
 
 export default function Services() {
+  const router = useRouter();
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -25,6 +28,11 @@ export default function Services() {
       offset: 100,
     });
   }, []);
+
+  const handleServiceClick = (serviceTitle) => {
+    // Navigate to hire page with service filter
+    router.push(`/hire?service=${encodeURIComponent(serviceTitle)}`);
+  };
 
   const services = [
     {
@@ -108,6 +116,7 @@ export default function Services() {
               return (
                 <div
                   key={index}
+                  onClick={() => handleServiceClick(service.title)}
                   className="group relative h-80 rounded-2xl overflow-hidden border-2 border-gray-200 dark:border-gray-800 hover:border-black dark:hover:border-white transition-all duration-300 cursor-pointer"
                   data-aos="fade-up"
                   data-aos-delay={index * 100}
@@ -136,10 +145,10 @@ export default function Services() {
       {/* CTA Section */}
       <section className="w-full py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto text-center" data-aos="fade-up">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-6">
             Ready to get started?
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+          <p className="text-lg font-bold text-gray-600 dark:text-gray-400 mb-8">
             Find a professional in your area today
           </p>
           <button className="px-8 py-4 w-[300px] mx-auto bg-black dark:bg-white text-white dark:text-black font-bold rounded-full text-lg hover:opacity-90 transition-opacity">
@@ -150,3 +159,4 @@ export default function Services() {
     </div>
   );
 }
+

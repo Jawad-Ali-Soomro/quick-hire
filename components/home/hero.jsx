@@ -168,7 +168,7 @@ export default function Hero() {
         </div>
 
         <div className="mt-12" data-aos="fade-up" data-aos-delay="300">
-          <h2 className="text-3xl sm:text-4xl font-bold text-black dark:text-white mb-2">
+          <h2 className="text-3xl sm:text-4xl font-black text-black dark:text-white mb-2">
             Pros for every project in{" "}
             <span className="text-gray-600 dark:text-gray-400 inline-block animate-fade-in-scale" style={{ animationDelay: '0.2s' }}>Your Area.</span>
           </h2>
@@ -491,10 +491,10 @@ export default function Hero() {
           
           <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center mb-12" data-aos="fade-up" data-aos-delay="100">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4">
                 Trusted pros, coast to coast.
               </h2>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg font-bold text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                 Don't worry about finding a pro — we cover every county in the U.S.
               </p>
             </div>
@@ -541,19 +541,73 @@ export default function Hero() {
 
         <div className="mt-20 md:mt-32 lg:mt-60 mb-12 md:mb-16" data-aos="fade-up">
           <div className="text-center mb-12 md:mb-16" data-aos="fade-up" data-aos-delay="100">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4">
               Why customers love QuickHire<sup className="text-xs md:text-sm align-super">™</sup>
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg font-bold text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Every day, millions of customers like you rely on QuickHire to care for their homes—and we've got your back if things don't go as planned.
             </p>
           </div>
 
           {/* Tab Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center order-2 lg:order-1">
-            {/* Left Column - Tabs with Descriptions */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Tabs with Descriptions - First on mobile, Left on desktop */}
+            <div className="space-y-6 order-1 lg:order-1" data-aos="fade-right" data-aos-delay="200">
+              {[
+                { 
+                  id: 0, 
+                  title: "Get to a hire faster.", 
+                  description: "Share details about your project in your own words, so we can find your best fit of professionals.",
+                  boxed: false 
+                },
+                { 
+                  id: 1, 
+                  title: "Only see local, trusted pros.", 
+                  description: "We will only show you pros we are confident can do their job very well & better.",
+                  boxed: true 
+                },
+                { 
+                  id: 2, 
+                  title: "A job done right.", 
+                  description: "If the job isn't done as agreed you could get up to $2,500 back. Terms apply.",
+                  boxed: false 
+                },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full text-left p-6 rounded-[30px] cursor-pointer transition-all duration-500 ease-in-out transform ${
+                    activeTab === tab.id
+                      ? "border-2 border-black dark:border-white bg-white dark:bg-black shadow-lg"
+                      : "border-2 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:scale-102 bg-white dark:bg-black"
+                  }`}
+                
+                >
+                  <h3 className={`text-2xl sm:text-3xl md:text-4xl font-black mb-3 transition-all duration-500 ${
+                    activeTab === tab.id
+                      ? "text-black dark:text-white"
+                      : "text-gray-400 dark:text-gray-400"
+                  }`}>
+                    {tab.title}
+                  </h3>
+                  <p className={`text-base sm:text-lg font-bold transition-all duration-500 text-justify ${
+                    activeTab === tab.id
+                      ? "text-gray-600 dark:text-gray-400 opacity-100"
+                      : "text-gray-500 dark:text-gray-500 opacity-70"
+                  }`}>
+                    {tab.description}
+                    {tab.id === 2 && (
+                      <a href="#" className="text-black dark:text-white underline hover:opacity-80 ml-1 transition-opacity duration-300">
+                        Terms apply.
+                      </a>
+                    )}
+                  </p>
+                </button>
+              ))}
+            </div>
 
-            <div className="relative flex justify-center lg:justify-end order-1 lg:order-2 min-h-[700px]" data-aos="fade-left" data-aos-delay="300">
+            {/* Mobile Screen - Second on mobile, Right on desktop */}
+            <div className="relative flex justify-center lg:justify-end order-2 lg:order-2 min-h-[700px]" data-aos="fade-left" data-aos-delay="300">
               {/* Mobile Screen 1: Project Input */}
               {activeTab === 0 && (
                 <div className="relative w-[320px] sm:w-[360px] h-[700px] bg-white dark:bg-black rounded-[2.5rem] p-2 shadow-2xl border-2 border-black dark:border-white animate-slide-in-right">
@@ -667,12 +721,12 @@ export default function Hero() {
                     <div className="px-4 py-4 space-y-3 flex-1 overflow-y-auto">
                       {[
                         { name: "Grime Gone Cleaners", rating: 5, distance: "0.8 mi", verified: true, topPro: true },
-                        { name: "Sparkle Clean Services", rating: 5, distance: "1.2 mi", verified: true, topPro: false },
+                        { name: "Sparkle Cleanings.", rating: 5, distance: "1.2 mi", verified: true, topPro: false },
                         { name: "Elite Home Cleaning", rating: 4, distance: "2.1 mi", verified: true, topPro: true },
                       ].map((pro, idx) => (
                         <div 
                           key={idx} 
-                          className="p-4 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-black transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fade-in-up"
+                          className="p-4 border-2 border-gray-300 dark:border-gray-700 rounded-[30px] bg-white dark:bg-black transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fade-in-up"
                           style={{ animationDelay: `${idx * 0.1}s` }}
                         >
                           <div className="flex items-start gap-3">
@@ -681,15 +735,11 @@ export default function Hero() {
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
-                                <h5 className="font-bold text-black dark:text-white">{pro.name}</h5>
+                                <h5 className="font-bold text-black dark:text-white truncate">{pro.name}</h5>
                                 {pro.verified && (
                                   <MdVerified className="text-black dark:text-white text-sm" />
                                 )}
-                                {pro.topPro && (
-                                  <span className="px-2 w-[100px] text-center py-2 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-full border-black dark:border-white">
-                                    Top Pro
-                                  </span>
-                                )}
+                               
                               </div>
                               <div className="flex items-center gap-1 mb-2">
                                 {[...Array(pro.rating)].map((_, i) => (
@@ -762,7 +812,7 @@ export default function Hero() {
 
                       {/* Guarantee Details */}
                       <div className="space-y-4">
-                        <div className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                        <div className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-900 rounded-[30px] border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                           <MdSecurity className="text-black dark:text-white text-xl flex-shrink-0 mt-0.5 transition-transform duration-300 hover:rotate-12" />
                           <div>
                             <h6 className="font-semibold text-black dark:text-white mb-1">Fully Protected</h6>
@@ -772,7 +822,7 @@ export default function Hero() {
                           </div>
                         </div>
 
-                        <div className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                        <div className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-900 rounded-[30px] border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                           <MdThumbUp className="text-black dark:text-white text-xl flex-shrink-0 mt-0.5 transition-transform duration-300 hover:scale-125" />
                           <div>
                             <h6 className="font-semibold text-black dark:text-white mb-1">Quality Assured</h6>
@@ -795,74 +845,16 @@ export default function Hero() {
                 </div>
               )}
             </div>
-
-
-            <div className="space-y-6 order-1 lg:order-1" data-aos="fade-right" data-aos-delay="200">
-              {[
-                { 
-                  id: 0, 
-                  title: "Get to a hire faster.", 
-                  description: "Share details about your project in your own words, so we can find your best fit.",
-                  boxed: false 
-                },
-                { 
-                  id: 1, 
-                  title: "Only see local, trusted pros.", 
-                  description: "We will only show you pros we are confident can do their job very well & better.",
-                  boxed: true 
-                },
-                { 
-                  id: 2, 
-                  title: "A job done right—guaranteed.", 
-                  description: "If the job isn't done as agreed you could get up to $2,500 back. Terms apply.",
-                  boxed: false 
-                },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full text-left p-6 rounded-[30px] cursor-pointer transition-all duration-500 ease-in-out transform ${
-                    activeTab === tab.id
-                      ? "border-2 border-black dark:border-white bg-white dark:bg-black shadow-lg"
-                      : "border-2 border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 hover:scale-102 bg-white dark:bg-black"
-                  }`}
-                
-                >
-                  <h3 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 transition-all duration-500 ${
-                    activeTab === tab.id
-                      ? "text-black dark:text-white"
-                      : "text-gray-400 dark:text-gray-400"
-                  }`}>
-                    {tab.title}
-                  </h3>
-                  <p className={`text-base sm:text-lg transition-all duration-500 ${
-                    activeTab === tab.id
-                      ? "text-gray-600 dark:text-gray-400 opacity-100"
-                      : "text-gray-500 dark:text-gray-500 opacity-70"
-                  }`}>
-                    {tab.description}
-                    {tab.id === 2 && (
-                      <a href="#" className="text-black dark:text-white underline hover:opacity-80 ml-1 transition-opacity duration-300">
-                        Terms apply.
-                      </a>
-                    )}
-                  </p>
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile Screen - Top on mobile, Right on desktop */}
-          
           </div>
         </div>
 
         {/* Reviews Section */}
         <div className="mt-20 md:mt-32 lg:mt-60 mb-12 md:mb-16" data-aos="fade-up">
           <div className="text-center mb-12 md:mb-16" data-aos="fade-up" data-aos-delay="100">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4">
               What our customers say
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg font-bold text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               Real reviews from real customers who found their perfect pro
             </p>
           </div>

@@ -66,7 +66,7 @@ export default function Contact() {
                 Contact Information
               </h2>
               <div className="space-y-6">
-                <div className="flex items-start gap-4 p-6 border-2 border-gray-200 dark:border-gray-800 rounded-xl hover:border-black dark:hover:border-white transition-all duration-300">
+                <div className="flex items-start gap-4 p-6 border-2 border-gray-200 dark:border-gray-800 rounded-[30px] hover:border-black dark:hover:border-white transition-all duration-300">
                   <MdEmail className="text-3xl text-black dark:text-white flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="text-xl font-bold text-black dark:text-white mb-1">Email</h3>
@@ -75,7 +75,7 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 p-6 border-2 border-gray-200 dark:border-gray-800 rounded-xl hover:border-black dark:hover:border-white transition-all duration-300">
+                <div className="flex items-start gap-4 p-6 border-2 border-gray-200 dark:border-gray-800 rounded-[30px] hover:border-black dark:hover:border-white transition-all duration-300">
                   <MdPhone className="text-3xl text-black dark:text-white flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="text-xl font-bold text-black dark:text-white mb-1">Phone</h3>
@@ -84,7 +84,7 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 p-6 border-2 border-gray-200 dark:border-gray-800 rounded-xl hover:border-black dark:hover:border-white transition-all duration-300">
+                <div className="flex items-start gap-4 p-6 border-2 border-gray-200 dark:border-gray-800 rounded-[30px] hover:border-black dark:hover:border-white transition-all duration-300">
                   <MdLocationOn className="text-3xl text-black dark:text-white flex-shrink-0 mt-1" />
                   <div>
                     <h3 className="text-xl font-bold text-black dark:text-white mb-1">Location</h3>
@@ -103,9 +103,7 @@ export default function Contact() {
               </h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-bold text-black dark:text-white mb-2">
-                    Name
-                  </label>
+                
                   <input
                     type="text"
                     id="name"
@@ -113,14 +111,12 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors"
+                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-[30px] bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors"
                     placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-bold text-black dark:text-white mb-2">
-                    Email
-                  </label>
+                
                   <input
                     type="email"
                     id="email"
@@ -128,28 +124,24 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors"
+                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-[30px] bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors"
                     placeholder="your.email@example.com"
                   />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-bold text-black dark:text-white mb-2">
-                    Phone (Optional)
-                  </label>
+                 
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors"
+                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-[30px] bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors"
                     placeholder="+92 300 1234567"
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-bold text-black dark:text-white mb-2">
-                    Message
-                  </label>
+                 
                   <textarea
                     id="message"
                     name="message"
@@ -157,7 +149,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors resize-none"
+                    className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 rounded-[30px] bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition-colors resize-none"
                     placeholder="Tell us how we can help..."
                   />
                 </div>
@@ -176,3 +168,4 @@ export default function Contact() {
     </div>
   );
 }
+

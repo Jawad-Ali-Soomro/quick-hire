@@ -23,9 +23,7 @@ export default function Footer() {
           <div className="lg:col-span-1" data-aos="fade-up">
             <Link href="/" className="flex items-center mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-white dark:bg-black flex items-center justify-center border-2 border-white dark:border-black">
-                  <span className="text-xl font-black text-black dark:text-white">QH</span>
-                </div>
+                
                 <span className="text-2xl font-black text-white dark:text-black">
                   QuickHire<sup className="text-xs align-super">™</sup>
                 </span>

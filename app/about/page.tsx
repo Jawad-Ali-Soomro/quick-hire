@@ -31,7 +31,7 @@ export default function About() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-black dark:text-white mb-6">
               About QuickHire<sup className="text-lg md:text-sm align-super">™</sup>
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 font-bold max-w-3xl mx-auto">
               Connecting trusted local professionals with customers across Pakistan. 
               We're building the future of home services, one connection at a time.
             </p>
@@ -47,11 +47,11 @@ export default function About() {
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black dark:text-white mb-6">
                 Our Mission
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed text-justify">
                 At QuickHire, we believe everyone deserves access to reliable, professional home services. 
                 Our mission is to bridge the gap between skilled professionals and customers who need their expertise.
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+              <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed text-justify">
                 We're committed to creating a platform where trust, quality, and convenience come together 
                 to make home maintenance and improvement accessible to everyone across Pakistan.
               </p>
@@ -65,7 +65,7 @@ export default function About() {
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <div key={index} className="flex items-start gap-4 p-6 bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-xl hover:border-black dark:hover:border-white transition-all duration-300">
+                  <div key={index} className="flex items-start gap-4 p-6 bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-[30px] hover:border-black dark:hover:border-white transition-all duration-300">
                     <Icon className="text-3xl text-black dark:text-white flex-shrink-0" />
                     <div>
                       <h3 className="text-xl font-bold text-black dark:text-white mb-2">{item.title}</h3>
@@ -109,7 +109,7 @@ export default function About() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4">
               Our Values
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-400 font-bold max-w-2xl mx-auto">
               The principles that guide everything we do
             </p>
           </div>
@@ -121,10 +121,10 @@ export default function About() {
             ].map((value, index) => {
               const Icon = value.icon;
               return (
-                <div key={index} className="text-center p-8 bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-2xl hover:border-black dark:hover:border-white transition-all duration-300" data-aos="fade-up" data-aos-delay={index * 100}>
+                <div key={index} className="text-center p-8 bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-[30px] hover:border-black dark:hover:border-white transition-all duration-300" data-aos="fade-up" data-aos-delay={index * 100}>
                   <Icon className="text-5xl text-black dark:text-white mx-auto mb-4" />
                   <h3 className="text-2xl font-black text-black dark:text-white mb-4">{value.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{value.desc}</p>
+                  <p className="text-gray-600 dark:text-gray-400 font-bold">{value.desc}</p>
                 </div>
               );
             })}
@@ -134,3 +134,4 @@ export default function About() {
     </div>
   );
 }
+

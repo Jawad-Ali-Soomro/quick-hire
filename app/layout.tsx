@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { global } from "./fonts";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import ConditionalLayout from "../components/conditional-layout";
+import { AuthProvider } from "../contexts/AuthContext";
 
 
 export const metadata: Metadata = {
@@ -20,9 +20,11 @@ export default function RootLayout({
       <body
         className={`${global.variable} antialiased`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
+        </AuthProvider>
       </body>
     </html>
   );

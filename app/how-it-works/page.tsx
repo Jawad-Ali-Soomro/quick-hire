@@ -101,7 +101,7 @@ export default function HowItWorks() {
                       {step.description}
                     </p>
                   </div>
-                  <div className={`relative h-64 md:h-80 rounded-2xl border-2 border-gray-200 dark:border-gray-800 overflow-hidden group hover:border-black dark:hover:border-white transition-all duration-300 ${!isEven ? "lg:order-1" : ""}`}>
+                  <div className={`relative h-64 md:h-80 rounded-[30px] border-2 border-gray-200 dark:border-gray-800 overflow-hidden group hover:border-black dark:hover:border-white transition-all duration-300 ${!isEven ? "lg:order-1" : ""}`}>
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -141,7 +141,7 @@ export default function HowItWorks() {
             ].map((benefit, index) => (
               <div
                 key={index}
-                className="p-8 bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-2xl hover:border-black dark:hover:border-white transition-all duration-300 text-center"
+                className="p-8 bg-white dark:bg-black border-2 border-gray-200 dark:border-gray-800 rounded-[30px] hover:border-black dark:hover:border-white transition-all duration-300 text-center"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
@@ -170,3 +170,4 @@ export default function HowItWorks() {
     </div>
   );
 }
+

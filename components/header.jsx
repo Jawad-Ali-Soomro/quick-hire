@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import { MdMenu, MdClose } from "react-icons/md";
+import { BiLogOut } from "react-icons/bi";
 
 export default function Header() {
+  const { user, isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -70,16 +73,35 @@ export default function Header() {
 
           {/* Desktop Buttons */}
           <div className="hidden md:flex items-center gap-2">
-            <button
-              className="cursor-pointer w-[150px] px-4 md:px-6 h-10 md:h-[50px] font-black bg-black dark:bg-white text-white dark:text-black rounded-full text-xs md:text-sm hover:opacity-90 transition-opacity whitespace-nowrap"
+            <Link
+              href="/hire"
+              className="cursor-pointer w-[150px] px-4 md:px-6 h-10 md:h-[50px] font-black bg-black dark:bg-white text-white dark:text-black rounded-full text-xs md:text-sm hover:opacity-90 transition-opacity whitespace-nowrap flex items-center justify-center"
             >
               Hire.
-            </button>
-            <button
-              className="cursor-pointer w-[150px] px-4 md:px-6 h-10 md:h-[50px] font-black border-2 border-black dark:border-white text-black dark:text-white rounded-full text-xs md:text-sm hover:opacity-90 transition-opacity whitespace-nowrap"
-            >
-              Join.
-            </button>
+            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="cursor-pointer w-[150px] px-4 md:px-6 h-10 md:h-[50px] font-black border-2 border-black dark:border-white text-black dark:text-white rounded-full text-xs md:text-sm hover:opacity-90 transition-opacity whitespace-nowrap flex items-center justify-center"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={logout}
+                  className="cursor-pointer w-[50px]  flex items-center justify-center h-10 md:h-[50px] font-black border-2 border-gray-300 dark:border-gray-700 text-black dark:text-white rounded-full text-xs md:text-sm hover:opacity-90 transition-opacity whitespace-nowrap"
+                >
+                  <BiLogOut />
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/join"
+                className="cursor-pointer w-[150px] px-4 md:px-6 h-10 md:h-[50px] font-black border-2 border-black dark:border-white text-black dark:text-white rounded-full text-xs md:text-sm hover:opacity-90 transition-opacity whitespace-nowrap flex items-center justify-center"
+              >
+                Join.
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -121,18 +143,41 @@ export default function Header() {
 
             {/* Mobile Buttons */}
             <div className="flex flex-col gap-3">
-              <button
+              <Link
+                href="/hire"
                 onClick={() => setIsMenuOpen(false)}
-                className="w-full h-12 font-black bg-black dark:bg-white text-white dark:text-black rounded-full text-sm hover:opacity-90 transition-opacity"
+                className="w-full h-12 font-black bg-black dark:bg-white text-white dark:text-black rounded-full text-sm hover:opacity-90 transition-opacity flex items-center justify-center"
               >
                 Hire.
-              </button>
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="w-full h-12 font-black border-2 border-black dark:border-white text-black dark:text-white rounded-full text-sm hover:opacity-90 transition-opacity"
-              >
-                Join.
-              </button>
+              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="w-full h-12 font-black border-2 border-black dark:border-white text-black dark:text-white rounded-full text-sm hover:opacity-90 transition-opacity flex items-center justify-center"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      logout();
+                    }}
+                    className="w-full h-12 font-black border-2 border-gray-300 dark:border-gray-700 text-black dark:text-white rounded-full text-sm hover:opacity-90 transition-opacity"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/join"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full h-12 font-black border-2 border-black dark:border-white text-black dark:text-white rounded-full text-sm hover:opacity-90 transition-opacity flex items-center justify-center"
+                >
+                  Join.
+                </Link>
+              )}
             </div>
           </div>
         </div>
