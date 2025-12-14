@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import AOS from "aos";
@@ -23,7 +23,7 @@ import {
   MdMessage
 } from "react-icons/md";
 
-export default function Hire() {
+function HireContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
@@ -638,5 +638,17 @@ export default function Hire() {
         document.body
       )}
     </div>
+  );
+}
+
+export default function Hire() {
+  return (
+    <Suspense fallback={
+      <div className="w-full min-h-screen bg-white dark:bg-black font-sans flex items-center justify-center pt-24">
+        <p className="text-lg font-bold text-gray-600 dark:text-gray-400">Loading...</p>
+      </div>
+    }>
+      <HireContent />
+    </Suspense>
   );
 }
