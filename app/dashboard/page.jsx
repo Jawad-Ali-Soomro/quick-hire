@@ -16,6 +16,7 @@ import {
   MdAccessTime,
   MdClose
 } from "react-icons/md";
+import ReactECharts from 'echarts-for-react';
 
 export default function Dashboard() {
   const { user, logout, isAuthenticated, loading: authLoading } = useAuth();
@@ -80,6 +81,194 @@ export default function Dashboard() {
   const pendingContracts = contracts.filter(c => c.status === 'pending');
   const activeContracts = contracts.filter(c => c.status === 'accepted');
   const completedContracts = contracts.filter(c => c.status === 'completed');
+  const rejectedContracts = contracts.filter(c => c.status === 'rejected');
+
+  // Prepare chart data for ECharts
+  const pieChartData = [
+    { value: pendingContracts.length, name: 'Pending', itemStyle: { color: '#fbbf24' } },
+    { value: activeContracts.length, name: 'Active', itemStyle: { color: '#3b82f6' } },
+    { value: completedContracts.length, name: 'Completed', itemStyle: { color: '#10b981' } },
+    { value: rejectedContracts.length, name: 'Rejected', itemStyle: { color: '#ef4444' } },
+  ].filter(item => item.value > 0);
+
+  // Contracts over time (last 6 months)
+  const getMonthlyData = () => {
+    const months = [];
+    const now = new Date();
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const monthName = date.toLocaleDateString('en-US', { month: 'short' });
+      months.push({ month: monthName, contracts: 0 });
+    }
+    
+    contracts.forEach(contract => {
+      const contractDate = new Date(contract.createdAt);
+      const monthIndex = months.findIndex(m => {
+        const monthDate = new Date(contractDate.getFullYear(), contractDate.getMonth(), 1);
+        const chartMonth = new Date(now.getFullYear(), now.getMonth() - (5 - months.indexOf(m)), 1);
+        return monthDate.getTime() === chartMonth.getTime();
+      });
+      if (monthIndex !== -1) {
+        months[monthIndex].contracts++;
+      }
+    });
+    
+    return months;
+  };
+
+  const monthlyData = getMonthlyData();
+
+  // ECharts options
+  const pieChartOption = {
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b}: {c} ({d}%)',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      borderColor: 'transparent',
+      textStyle: { color: '#fff' }
+    },
+    grid: {
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      containLabel: false
+    },
+    legend: {
+      orient: 'vertical',
+      left: 'left',
+      textStyle: { color: '#6b7280', fontSize: 12, fontWeight: 'bold' }
+    },
+    series: [
+      {
+        name: 'Contract Status',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: 'transparent',
+          borderWidth: 0
+        },
+        label: {
+          show: true,
+          formatter: '{b}: {c} ({d}%)',
+          fontSize: 12,
+          fontWeight: 'bold'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 14,
+            fontWeight: 'bold'
+          }
+        },
+        data: pieChartData
+      }
+    ]
+  };
+
+  const areaChartOption = {
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      borderColor: 'transparent',
+      textStyle: { color: '#fff' }
+    },
+    grid: {
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      containLabel: false
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: monthlyData.map(m => m.month),
+      axisLabel: { color: '#6b7280', fontSize: 12, fontWeight: 'bold' },
+      axisLine: { show: false },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: { color: '#6b7280', fontSize: 12, fontWeight: 'bold' },
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: { show: false }
+    },
+    series: [
+      {
+        name: 'Contracts',
+        type: 'line',
+        smooth: true,
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(59, 130, 246, 0.6)' },
+              { offset: 1, color: 'rgba(59, 130, 246, 0.1)' }
+            ]
+          }
+        },
+        lineStyle: { color: '#3b82f6', width: 3 },
+        itemStyle: { color: '#3b82f6' },
+        data: monthlyData.map(m => m.contracts)
+      }
+    ]
+  };
+
+  const barChartOption = {
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      borderColor: 'transparent',
+      textStyle: { color: '#fff' }
+    },
+    grid: {
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      containLabel: false
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Pending', 'Active', 'Completed', 'Rejected'],
+      axisLabel: { color: '#6b7280', fontSize: 12, fontWeight: 'bold' },
+      axisLine: { show: false },
+      axisTick: { show: false }
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: { color: '#6b7280', fontSize: 12, fontWeight: 'bold' },
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: { show: false }
+    },
+    series: [
+      {
+        name: 'Contracts',
+        type: 'bar',
+        data: [
+          pendingContracts.length,
+          activeContracts.length,
+          completedContracts.length,
+          rejectedContracts.length
+        ],
+        itemStyle: {
+          color: '#3b82f6',
+          borderRadius: [8, 8, 0, 0],
+          borderWidth: 0
+        },
+        barWidth: '60%'
+      }
+    ]
+  };
 
   return (
     <div className="w-full min-h-screen bg-white dark:bg-black font-sans pt-24 md:pt-32">
@@ -124,6 +313,41 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+
+        {/* Charts Section */}
+        {contracts.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            {/* Contract Status Pie Chart */}
+            <div className="bg-white dark:bg-black  p-0 overflow-hidden">
+              <h2 className="text-xl font-black text-black dark:text-white mb-4 px-6 pt-6">Contract Status Distribution</h2>
+              <ReactECharts
+                option={pieChartOption}
+                style={{ height: '300px', width: '100%', padding: 0, margin: 0 }}
+                opts={{ renderer: 'svg' }}
+              />
+            </div>
+
+            {/* Contracts Over Time */}
+            <div className="bg-white dark:bg-black  p-0 overflow-hidden">
+              <h2 className="text-xl font-black text-black dark:text-white mb-4 px-6 pt-6">Contracts Over Time</h2>
+              <ReactECharts
+                option={areaChartOption}
+                style={{ height: '300px', width: '100%', padding: 0, margin: 0 }}
+                opts={{ renderer: 'svg' }}
+              />
+            </div>
+
+            {/* Status Breakdown Bar Chart */}
+            <div className="bg-white dark:bg-black  p-0 overflow-hidden lg:col-span-2">
+              <h2 className="text-xl font-black text-black dark:text-white mb-4 px-6 pt-6">Status Breakdown</h2>
+              <ReactECharts
+                option={barChartOption}
+                style={{ height: '300px', width: '100%', padding: 0, margin: 0 }}
+                opts={{ renderer: 'svg' }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="flex gap-4 mb-6 border-b-2 border-gray-200 dark:border-gray-800">
@@ -440,4 +664,6 @@ export default function Dashboard() {
     </div>
   );
 }
+
+
 

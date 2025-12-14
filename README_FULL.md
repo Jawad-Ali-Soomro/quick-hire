@@ -238,3 +238,5 @@ The app uses JWT (JSON Web Tokens) for authentication:
 
 For issues or questions, check the code comments or create an issue in the repository.
 
+
+
